@@ -32,38 +32,55 @@ import random
 def start_game():
         
     # write your code inside this function.
-    highscore = 1000 #initial high score
-    playagain = input("Do you want to play a game?  ")
+    play_again = "y" #initial play_again status
+    num_range = int(10) #the upper limit incase i want to change it later
+    best_score = num_range #initial best score set to the max range
     
-    while playagain.lower() != "n":
-      numrange = 10 #the upper limit incase i want to change it later
-      thenumber = random.randint(1,numrange)
-      print("The number is: {}".format(thenumber)) #remove later
-      print("The current High.. er low, score is {}.".format(highscore))
-      thisguess = int(0)
-      currenttries = int(0)
+    while play_again.lower() != "n":
+      the_number = random.randint(1,num_range)
       
-      print("Hello, I want to play a game\nYou are going to be punched in the throat\n*PUNCHEDINTHROAT*")
-      print("How many more times you get punched in the throat depends on how many tries it takes you to guess a number between 1 and {}".format(numrange))
+      #print("The number is: {}".format(the_number)) #put this here for debugging. commented out in final product
       
-      while thisguess != thenumber:
-          thisguess = int(input("What is your guess?  "))
-          currenttries += 1
-          if thisguess > thenumber:
+      print("The current best score is {}.".format(best_score))
+      this_guess = int(0) #initialize the first guess
+      current_tries = int(0) #initialize the number of tries
+      
+      print("Guess an integer between 1 and {}, I'll let you know for each guess if the number is higher or lower than your guess".format(num_range))
+      
+      while this_guess != the_number:
+          #Check for valid integer input
+          try:
+            current_tries += 1  #invalid guesses still count as guesses!
+            this_guess = int(input("What is guess number {}?  ".format(current_tries)))
+          except ValueError:
+            print("That isn't an integer, try again.")  
+            continue  
+          
+          #check that the integer input is within proper range
+          if (this_guess > num_range) or (this_guess < 1):
+            print("That is outside the range, number must be between 1 and {}".format(num_range))
+            continue
+                   
+          #Check if the guess is higher or lower than the number and let the user know
+          if this_guess > the_number:
             print("The number is lower")
-          elif thisguess < thenumber:
-            print("the number is higher")
+          elif this_guess < the_number:
+            print("The number is higher")
             
       
-      print("Well done, It only took you {} tries to guess my number!".format(currenttries))
-      if currenttries < highscore:
-        highscore = currenttries
-      print("highscore is {}".format(highscore))
-      playagain = input("Do you want to play again? ")
+      print("Well done, It only took you {} tries to guess my number!".format(current_tries))
+      #Update and display the best score
+      if current_tries < best_score:
+        best_score = current_tries
+      print("The best score is {}".format(best_score))
       
-      
-
+      #prompt for playing again, make sure they enter y or n
+      play_again = input("Do you want to play again? (y/n)  ")
+      while play_again.lower() not in ("n","y"):
+        play_again = input("Please enter y or n:  ")
+        
 
   # Kick off the program by calling the start_game function.
+print("Welcome to the number guessing game!")  
 start_game()
   
