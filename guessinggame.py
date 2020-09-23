@@ -27,13 +27,14 @@ Psuedo-code Hints
 """
 
 import random
-#initialize variables
+
 
 def start_game():
         
     # write your code inside this function.
+    # initialize Variables
     play_again = "y" #initial play_again status
-    num_range = int(10) #the upper limit incase i want to change it later
+    num_range = int(10) #the upper limit in case I want to change it later
     best_score = num_range #initial best score set to the max range
     
     while play_again.lower() != "n":
